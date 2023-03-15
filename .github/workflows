@@ -1,0 +1,21 @@
+name: test_build_main
+run-name: Test and Build latest image 🚀
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  - name: Set up Docker Buildx
+    uses: docker/setup-buildx-action@v2
+  - name: Login to Docker Hub
+    uses: docker/login-action@v2
+    with:
+      username: ${{ secrets.DOCKER_HUB_LOGIN }}
+      password: ${{ secrets.DOCKER_HUB_TOKEN }}
+  - name: Build and push
+    uses: docker/build-push-action@v4
+    with:
+      push: true
+      tags: ${{ secrets.DOCKER_HUB_LOGIN }}/http-stub:latest
